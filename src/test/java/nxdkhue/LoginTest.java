@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
+//import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -47,7 +47,7 @@ public class LoginTest {
     }
 
     @Test
-    @Order(1)
+    
     void testLoginAdam() throws InterruptedException {
         driver.get(url);
         Thread.sleep(2000);
@@ -78,7 +78,7 @@ public class LoginTest {
     }
 
     @Test
-    @Order(2)
+    
     void testLoginKhue() throws InterruptedException {
         driver.get(url);
         Thread.sleep(2000);
