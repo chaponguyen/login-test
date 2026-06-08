@@ -86,7 +86,7 @@ public class LoginTest {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
         Thread.sleep(1500);
         user.clear();
-        user.sendKeys("Adam");
+        user.sendKeys("Adam113");
         Thread.sleep(1500);
 
         WebElement pass = driver.findElement(By.id("password"));
