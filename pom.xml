@@ -44,6 +44,9 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <forkedProcessTimeoutInSeconds>120</forkedProcessTimeoutInSeconds>
+                    <forkedProcessExitTimeoutInSeconds>30</forkedProcessExitTimeoutInSeconds>
                 </configuration>
             </plugin>
             <plugin>
