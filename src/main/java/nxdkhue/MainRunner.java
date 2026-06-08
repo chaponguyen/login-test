@@ -1,6 +1,5 @@
 package nxdkhue;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,10 +13,15 @@ public class MainRunner {
 
     public static void main(String[] args) {
         boolean headless = "true".equalsIgnoreCase(System.getProperty("headless"));
-        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         if (headless) {
             options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--remote-allow-origins=*");
         }
 
         WebDriver driver = new ChromeDriver(options);
