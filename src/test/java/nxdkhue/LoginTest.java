@@ -80,11 +80,11 @@ public class LoginTest {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
         Thread.sleep(500);
         user.clear();
-        user.sendKeys("adam113");
+        user.sendKeys("khue113");
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("Adam123");
+        pass.sendKeys("Khue123");
 
         WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
         submit.click();
