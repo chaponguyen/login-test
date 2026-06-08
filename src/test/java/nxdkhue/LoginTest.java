@@ -101,11 +101,11 @@ public class LoginTest {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
         Thread.sleep(500);
         user.clear();
-        user.sendKeys("Adam");
+        user.sendKeys("Khue");
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("Adam123");
+        pass.sendKeys("Khue123");
 
         WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
         submit.click();
@@ -117,4 +117,32 @@ public class LoginTest {
 
         Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
     }
+
+    /*
+    @Test
+    void testLoginSinhvienTLU() throws InterruptedException {
+        driver.get(url);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
+        WebElement user = driver.findElement(By.id("username"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
+        Thread.sleep(500);
+        user.clear();
+        user.sendKeys("sinhvienTLU");
+
+        WebElement pass = driver.findElement(By.id("password"));
+        pass.clear();
+        pass.sendKeys("SinhvienTLU123");
+
+        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
+        submit.click();
+
+        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
+        Thread.sleep(500);
+        String statusText = status.getText().trim();
+
+        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+    }
+    */
 }
