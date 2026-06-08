@@ -32,6 +32,14 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: Check login target availability
+        shell: pwsh
+        run: |
+          $url = 'https://efadzli.com/software_testing/index.php?view=user_login'
+          Write-Host "Checking $url"
+          $res = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 30 -ErrorAction Stop
+          Write-Host "Site responded with status $($res.StatusCode)"
+
       - name: Run LoginTest
         run: mvn clean test -Dheadless=true
 
