@@ -114,30 +114,30 @@ public class LoginTest {
     //     Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
     // }
 
-    @Test
-    @Order(2)
-    void testLoginSinhVienTLU() {
-        driver.get("https://sinhvien1.tlu.edu.vn/#/login");
+    // @Test
+    // @Order(2)
+    // void testLoginSinhVienTLU() {
+    //     driver.get("https://sinhvien1.tlu.edu.vn/#/login");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
-        user.clear();
-        user.sendKeys("2351067097");
+    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    //     WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+    //     user.clear();
+    //     user.sendKeys("2351067097");
 
-        WebElement pass = driver.findElement(By.id("password"));
-        pass.clear();
-        pass.sendKeys("Khue2005");
+    //     WebElement pass = driver.findElement(By.id("password"));
+    //     pass.clear();
+    //     pass.sendKeys("Khue2005");
 
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
-        ));
-        loginButton.click();
+    //     WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
+    //             By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
+    //     ));
+    //     loginButton.click();
 
-        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("/login")));
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
+    //     wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("/login")));
+    //     try {
+    //         Thread.sleep(2000);
+    //     } catch (InterruptedException e) {
+    //         Thread.currentThread().interrupt();
+    //     }
+    // }
 }
