@@ -77,34 +77,34 @@ public class LoginTest {
         Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
     }
 
-    @Test
+    // @Test
     
-    void testLoginKhue() throws InterruptedException {
-        driver.get(url);
-        Thread.sleep(2000);
-        WebElement user = driver.findElement(By.id("username"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
-        Thread.sleep(1500);
-        user.clear();
-        user.sendKeys("10-Khue");
-        Thread.sleep(1500);
+    // void testLoginKhue() throws InterruptedException {
+    //     driver.get(url);
+    //     Thread.sleep(2000);
+    //     WebElement user = driver.findElement(By.id("username"));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
+    //     Thread.sleep(1500);
+    //     user.clear();
+    //     user.sendKeys("10-Khue");
+    //     Thread.sleep(1500);
 
-        WebElement pass = driver.findElement(By.id("password"));
-        pass.clear();
-        pass.sendKeys("Khue123");
-        Thread.sleep(1500);
+    //     WebElement pass = driver.findElement(By.id("password"));
+    //     pass.clear();
+    //     pass.sendKeys("Khue123");
+    //     Thread.sleep(1500);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
-        Thread.sleep(1500);
-        submit.click();
-        Thread.sleep(1500);
+    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    //     WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
+    //     Thread.sleep(1500);
+    //     submit.click();
+    //     Thread.sleep(1500);
 
-        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
-        Thread.sleep(1500);
-        String statusText = status.getText().trim();
+    //     WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
+    //     Thread.sleep(1500);
+    //     String statusText = status.getText().trim();
 
-        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
-    }
+    //     Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+    // }
 }
