@@ -1,5 +1,4 @@
 name: Selenium Login Tests
-
 on:
   push:
     branches: [main]
@@ -8,44 +7,32 @@ on:
 
 jobs:
   test:
+    name: "Test - ${{ matrix.test-name }}"
     runs-on: windows-latest
-
+    strategy:
+      matrix:
+        include:
+          - test-method: testLoginAdam
+            test-name: Valid Login
+          - test-method: testLoginKhue
+            test-name: Invalid Login
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Install Chrome stable
-        uses: browser-actions/setup-chrome@v1
+      - uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: latest
-
-      - name: Cache Maven
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-
-      - name: Check login target availability
-        shell: pwsh
-        run: |
-          $url = 'https://efadzli.com/software_testing/index.php?view=user_login'
-          Write-Host "Checking $url"
-          $res = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 30 -ErrorAction Stop
-          Write-Host "Site responded with status $($res.StatusCode)"
-
-      - name: Run LoginTest
-        run: mvn clean test -Dheadless=true
-
-      - name: Upload test reports
+      - name: Run ${{ matrix.test-name }}
+        run: mvn clean test -Dtest=LoginTest#${{ matrix.test-method }} -Dheadless=true
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: report-${{ matrix.test-method }}
           path: target/surefire-reports/
