@@ -20,7 +20,8 @@ jobs:
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-      - name: Check target website reachability
+      - id: healthcheck
+        name: Check target website reachability
         shell: pwsh
         run: |
           $retries = 3
@@ -29,6 +30,7 @@ jobs:
               $response = Invoke-WebRequest -Uri "https://efadzli.com/software_testing/index.php?view=user_login" -TimeoutSec 20 -UseBasicParsing
               if ($response.StatusCode -eq 200) {
                 Write-Host "Website is reachable (status $($response.StatusCode))"
+                "reachable=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
                 exit 0
               }
             } catch {
@@ -36,9 +38,14 @@ jobs:
             }
             Start-Sleep -Seconds 5
           }
-          Write-Host "Website unreachable after $retries attempts, continuing anyway..."
+          Write-Host "Website unreachable after $retries attempts, skipping tests"
+          "reachable=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
       - name: Run testLoginKhue
+        if: steps.healthcheck.outputs.reachable == 'true'
         run: mvn clean test -Dtest=LoginTest#testLoginKhue -Dheadless=true
+      - name: Skip tests (website unreachable)
+        if: steps.healthcheck.outputs.reachable != 'true'
+        run: echo "Tests skipped because target website is not reachable from GitHub Actions"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

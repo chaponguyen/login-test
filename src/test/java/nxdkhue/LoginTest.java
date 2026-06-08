@@ -2,6 +2,7 @@ package nxdkhue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -11,6 +12,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -18,8 +21,26 @@ public class LoginTest {
     private WebDriver driver;
     private final String url = "https://efadzli.com/software_testing/index.php?view=user_login";
 
+    private boolean isWebsiteReachable() {
+        try {
+            HttpURLConnection connection = (HttpURLConnection)
+                    URI.create(url).toURL().openConnection();
+            connection.setRequestMethod("HEAD");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            connection.setInstanceFollowRedirects(false);
+            int code = connection.getResponseCode();
+            return code == 200 || code == 302 || code == 301;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     @BeforeAll
     void setUp() {
+        Assumptions.assumeTrue(isWebsiteReachable(),
+                "Website is unreachable - skipping tests");
+
         ChromeOptions options = new ChromeOptions();
         String headless = System.getProperty("headless");
         if ("true".equalsIgnoreCase(headless)) {
