@@ -1,7 +1,6 @@
 package nxdkhue;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -40,11 +39,6 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    @AfterEach
-    void pauseBetweenTests() throws InterruptedException {
-        Thread.sleep(3000);
-    }
-
     @AfterAll
     void tearDown() {
         if (driver != null) {
@@ -52,36 +46,36 @@ public class LoginTest {
         }
     }
 
-    // @Test
-    // @Order(1)
-    // void testLoginAdam() throws InterruptedException {
-    //     driver.get(url);
-    //     Thread.sleep(2000);
-    //     WebElement user = driver.findElement(By.id("username"));
-    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
-    //     Thread.sleep(1500);
-    //     user.clear();
-    //     user.sendKeys("Adam");
-    //     Thread.sleep(1500);
+    @Test
+    @Order(1)
+    void testLoginAdam() throws InterruptedException {
+        driver.get(url);
+        Thread.sleep(2000);
+        WebElement user = driver.findElement(By.id("username"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
+        Thread.sleep(1500);
+        user.clear();
+        user.sendKeys("Adam");
+        Thread.sleep(1500);
 
-    //     WebElement pass = driver.findElement(By.id("password"));
-    //     pass.clear();
-    //     pass.sendKeys("Adam123");
-    //     Thread.sleep(1500);
+        WebElement pass = driver.findElement(By.id("password"));
+        pass.clear();
+        pass.sendKeys("Adam123");
+        Thread.sleep(1500);
 
-    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    //     WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
-    //     Thread.sleep(1500);
-    //     submit.click();
-    //     Thread.sleep(1500);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
+        Thread.sleep(1500);
+        submit.click();
+        Thread.sleep(1500);
 
-    //     WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
-    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
-    //     Thread.sleep(1500);
-    //     String statusText = status.getText().trim();
+        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
+        Thread.sleep(1500);
+        String statusText = status.getText().trim();
 
-    //     Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
-    // }
+        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+    }
 
     @Test
     @Order(2)
@@ -113,31 +107,4 @@ public class LoginTest {
 
         Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
     }
-
-    // @Test
-    // @Order(2)
-    // void testLoginSinhVienTLU() {
-    //     driver.get("https://sinhvien1.tlu.edu.vn/#/login");
-
-    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    //     WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
-    //     user.clear();
-    //     user.sendKeys("2351067097");
-
-    //     WebElement pass = driver.findElement(By.id("password"));
-    //     pass.clear();
-    //     pass.sendKeys("Khue2005");
-
-    //     WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
-    //             By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
-    //     ));
-    //     loginButton.click();
-
-    //     wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("/login")));
-    //     try {
-    //         Thread.sleep(2000);
-    //     } catch (InterruptedException e) {
-    //         Thread.currentThread().interrupt();
-    //     }
-    // }
 }
