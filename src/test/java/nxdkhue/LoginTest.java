@@ -86,12 +86,12 @@ public class LoginTest {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
         Thread.sleep(1500);
         user.clear();
-        user.sendKeys("Khue111");
+        user.sendKeys("Adam");
         Thread.sleep(1500);
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("Khue123");
+        pass.sendKeys("Adam123");
         Thread.sleep(1500);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
