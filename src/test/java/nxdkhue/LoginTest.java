@@ -155,8 +155,9 @@ public class LoginTest {
             Thread.currentThread().interrupt();
         }
 
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("/login")));
         String currentUrl = driver.getCurrentUrl();
-        Assertions.assertTrue(currentUrl.contains("/login"),
-                "Login failed - should stay on login page. Current URL: " + currentUrl);
+        Assertions.assertFalse(currentUrl.contains("/login"),
+                "Login should succeed. Current URL: " + currentUrl);
     }
 }
