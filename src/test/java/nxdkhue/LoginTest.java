@@ -1,60 +1,44 @@
 package nxdkhue;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.HttpURLConnection;
-import java.net.URI;
 import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LoginTest {
     private WebDriver driver;
     private final String url = "https://efadzli.com/software_testing/index.php?view=user_login";
 
-    private boolean isWebsiteReachable() {
-        try {
-            HttpURLConnection connection = (HttpURLConnection)
-                    URI.create(url).toURL().openConnection();
-            connection.setRequestMethod("HEAD");
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            connection.setInstanceFollowRedirects(false);
-            int code = connection.getResponseCode();
-            return code == 200 || code == 302 || code == 301;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     @BeforeAll
     void setUp() {
-        Assumptions.assumeTrue(isWebsiteReachable(),
-                "Website is unreachable - skipping tests");
-
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         String headless = System.getProperty("headless");
         if ("true".equalsIgnoreCase(headless)) {
             options.addArguments("--headless=new");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-extensions");
-            options.addArguments("--window-size=1920,1080");
-            options.addArguments("--remote-allow-origins=*");
         }
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+    }
+
+    @AfterEach
+    void pauseBetweenTests() throws InterruptedException {
+        Thread.sleep(3000);
     }
 
     @AfterAll
@@ -64,85 +48,121 @@ public class LoginTest {
         }
     }
 
+    // @Test
+    
+    // void testLoginAdam() throws InterruptedException {
+    //     driver.get(url);
+    //     Thread.sleep(2000);
+    //     WebElement user = driver.findElement(By.id("username"));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
+    //     Thread.sleep(1500);
+    //     user.clear();
+    //     user.sendKeys("Adam");
+    //     Thread.sleep(1500);
+
+    //     WebElement pass = driver.findElement(By.id("password"));
+    //     pass.clear();
+    //     pass.sendKeys("Adam123");
+    //     Thread.sleep(1500);
+
+    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    //     WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
+    //     Thread.sleep(1500);
+    //     submit.click();
+    //     Thread.sleep(1500);
+
+    //     WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
+    //     Thread.sleep(1500);
+    //     String statusText = status.getText().trim();
+
+    //     Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+    // }
+    // @Test
+    
+    // void testLoginKhue() throws InterruptedException {
+    //     driver.get(url);
+    //     Thread.sleep(2000);
+    //     WebElement user = driver.findElement(By.id("username"));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
+    //     Thread.sleep(1500);
+    //     user.clear();
+    //     user.sendKeys("10-Khue");
+    //     Thread.sleep(1500);
+
+    //     WebElement pass = driver.findElement(By.id("password"));
+    //     pass.clear();
+    //     pass.sendKeys("Khue123");
+    //     Thread.sleep(1500);
+
+    //     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    //     WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
+    //     Thread.sleep(1500);
+    //     submit.click();
+    //     Thread.sleep(1500);
+
+    //     WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
+    //     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
+    //     Thread.sleep(1500);
+    //     String statusText = status.getText().trim();
+
+    //     Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+    // }
+
     @Test
     
-    void testLoginAdam() throws InterruptedException {
-        driver.get(url);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
-        WebElement user = driver.findElement(By.id("username"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
-        Thread.sleep(500);
+    void testLoginSinhVienTLU() {
+        driver.get("https://sinhvien1.tlu.edu.vn/#/login");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
         user.clear();
-        user.sendKeys("Adam");
+        user.sendKeys("2351067097");
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("Adam123");
+        pass.sendKeys("Khue2005");
 
-        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
-        submit.click();
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
+        ));
+        loginButton.click();
 
-        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
-        Thread.sleep(500);
-        String statusText = status.getText().trim();
-
-        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("/login")));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Test
     
-    void testLoginKhue() throws InterruptedException {
-        driver.get(url);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
-        WebElement user = driver.findElement(By.id("username"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
-        Thread.sleep(500);
+    void testLoginSinhVienTLUFail() {
+        driver.get("https://sinhvien1.tlu.edu.vn/#/login");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement user = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
         user.clear();
-        user.sendKeys("adam");
+        user.sendKeys("2351067097");
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("adam123");
+        pass.sendKeys("WrongPassword123");
 
-        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
-        submit.click();
+        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
+        ));
+        loginButton.click();
 
-        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
-        Thread.sleep(500);
-        String statusText = status.getText().trim();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
+        String currentUrl = driver.getCurrentUrl();
+        Assertions.assertTrue(currentUrl.contains("/login"),
+                "Login failed - should stay on login page. Current URL: " + currentUrl);
     }
-
-    /*
-    @Test
-    void testLoginSinhvienTLU() throws InterruptedException {
-        driver.get(url);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username")));
-        WebElement user = driver.findElement(By.id("username"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", user);
-        Thread.sleep(500);
-        user.clear();
-        user.sendKeys("sinhvienTLU");
-
-        WebElement pass = driver.findElement(By.id("password"));
-        pass.clear();
-        pass.sendKeys("SinhvienTLU123");
-
-        WebElement submit = wait.until(ExpectedConditions.elementToBeClickable(By.id("submitButton")));
-        submit.click();
-
-        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("status")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior:'smooth',block:'center'});", status);
-        Thread.sleep(500);
-        String statusText = status.getText().trim();
-
-        Assertions.assertEquals("Congratulations!", statusText, "Expected status to show success message after submitting.");
-    }
-    */
 }

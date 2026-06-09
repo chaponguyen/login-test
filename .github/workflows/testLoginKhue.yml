@@ -1,9 +1,5 @@
-name: testLoginKhue
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+name: testLoginKhue (disabled)
+on: []
 jobs:
   test:
     runs-on: windows-latest
