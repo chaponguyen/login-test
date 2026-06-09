@@ -47,7 +47,7 @@ jobs:
         if: steps.healthcheck.outputs.reachable != 'true'
         run: echo "Tests skipped because target website is not reachable from GitHub Actions"
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: steps.healthcheck.outputs.reachable == 'true'
         with:
           name: reports-testLoginAdam
           path: target/surefire-reports/
