@@ -46,8 +46,8 @@ jobs:
       - name: Skip tests (website unreachable)
         if: steps.healthcheck.outputs.reachable != 'true'
         run: echo "Tests skipped because target website is not reachable from GitHub Actions"
-      - uses: actions/upload-artifact@v4(reports)
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: report-testLoginKhue
+          name: reports-testLoginKhue
           path: target/surefire-reports/
