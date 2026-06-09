@@ -1,5 +1,9 @@
-name: testLoginSinhVienTLU (disabled)
-on: []
+name: testLoginSinhVienTLUFail
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 jobs:
   test:
     runs-on: windows-latest
@@ -36,14 +40,14 @@ jobs:
           }
           Write-Host "Website unreachable after $retries attempts, skipping tests"
           "reachable=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-      - name: Run testLoginSinhVienTLU
+      - name: Run testLoginSinhVienTLUFail
         if: steps.healthcheck.outputs.reachable == 'true'
-        run: mvn clean test -Dtest=LoginTest#testLoginSinhVienTLU -Dheadless=true
+        run: mvn clean test -Dtest=LoginTest#testLoginSinhVienTLUFail -Dheadless=true
       - name: Skip tests (website unreachable)
         if: steps.healthcheck.outputs.reachable != 'true'
         run: echo "Tests skipped because target website is not reachable from GitHub Actions"
       - uses: actions/upload-artifact@v4
         if: steps.healthcheck.outputs.reachable == 'true' && always()
         with:
-          name: reports-testLoginSinhVienTLU
+          name: reports-testLoginSinhVienTLUFail
           path: target/surefire-reports/
