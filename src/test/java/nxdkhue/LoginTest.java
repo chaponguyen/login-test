@@ -142,7 +142,7 @@ public class LoginTest {
 
         WebElement pass = driver.findElement(By.id("password"));
         pass.clear();
-        pass.sendKeys("Khue2005");
+        pass.sendKeys("Khue2005111");
 
         WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("/html/body/ui-view/div/div/div[2]/div/div/button")
